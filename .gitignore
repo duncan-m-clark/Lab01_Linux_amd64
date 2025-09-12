@@ -1,6 +1,7 @@
 poker.h
 poker.c
 
+linux.amd64
 linux.x86
 macos.arm64
 macos.x86
