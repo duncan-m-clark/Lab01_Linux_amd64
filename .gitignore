@@ -1,0 +1,11 @@
+poker.h
+poker.c
+
+linux.x86
+macos.arm64
+macos.x86
+macos.x86_64
+win.x64
+win.x86
+
+Linux_amd64
