@@ -80,7 +80,6 @@ int straight(int* hand) {
 }
 
 int straight_flush(int* hand) {
-	return 0;
 	return straight(hand) && flush(hand);
 }
 
@@ -133,8 +132,52 @@ int pair(int* hand) {
 	return 0;
 }
 
-int break_tie(int* hand0, int* hand1, int tied_hand){
-	return 0;
+int break_tie(int* hand0, int* hand1, int tiedHand){
+	switch (tiedHand) {
+		case 1:
+		case 2:
+			int humanHigh = hand0[4];
+			int compHigh = hand1[4];
+
+			if ((humanHigh & 0xf) == 0x1) {
+				if ((hand0[3] & 0xf) == 0x5) {
+					humanHigh = hand0[3];
+				} else {
+					humanHigh = 14;
+				}
+			}
+
+			if ((compHigh & 0xf) == 0x1) {
+				if ((hand1[3] & 0xf) == 0x5) {
+					compHigh = hand1[3];
+				} else {
+					compHigh = 14;
+				}
+			}
+
+			if ((humanHigh & 0xf) == (compHigh & 0xf)) {
+				return (humanHigh & 0xf0) > (compHigh & 0xf0) ? 0 : 1;
+			}
+
+			return (humanHigh & 0xf) > (compHigh & 0xf) ? 0 : 1;
+		case 3:
+			break;
+		case 4:
+			break;
+		case 5:
+			break;
+		case 6:
+			break;
+		case 7:
+			break;
+		case 8:
+			break;
+		case 9:
+			break;
+		default:
+			return 0;
+			break;
+	}
 }
 
 int compare_hands(int* hand0, int* hand1) {
@@ -212,47 +255,55 @@ int compare_hands(int* hand0, int* hand1) {
 	printf("\n");
 
 	if (straight_flush(hand0) && straight_flush(hand1)) {
+		printf("straight flush tie\n");
 		return break_tie(hand0, hand1, 1);
 	} else if (straight_flush(hand0) || straight_flush(hand1)) {
 		printf("straight flush\n");
 		return straight_flush(hand1);
 	} else if (four_kind(hand0) && four_kind(hand1)) {
-		return break_tie(hand0, hand1, 2);
+		printf("four kind tie\n");
+		return break_tie(hand0, hand1, 3);
 	} else if (four_kind(hand0) || four_kind(hand1)) {
 		printf("four kind\n");
 		return four_kind(hand1);
 	} else if (full_house(hand0) && full_house(hand1)) {
-		return break_tie(hand0, hand1, 3);
+		printf("full house tie\n");
+		return break_tie(hand0, hand1, 4);
 	} else if (full_house(hand0) || full_house(hand1)) {
 		printf("full house\n");
 		return full_house(hand1);
 	} else if (flush(hand0) && flush(hand1)) {
-		return break_tie(hand0, hand1, 4);
+		printf("flush tie\n");
+		return break_tie(hand0, hand1, 5);
 	} else if (flush(hand0) || flush(hand1)) {
 		printf("flush\n");
 		return flush(hand1);
 	} else if (straight(hand0) && straight(hand1)) {
-		printf("why\n");
-		return break_tie(hand0, hand1, 5);
+		printf("straight tie\n");
+		return break_tie(hand0, hand1, 2);
 	} else if (straight(hand0) || straight(hand1)) {
 		printf("straight\n");
 		return straight(hand1);
 	} else if (three_kind(hand0) && three_kind(hand1)) {
+		printf("three kind tie\n");
 		return break_tie(hand0, hand1, 6);
 	} else if (three_kind(hand0) || three_kind(hand1)) {
 		printf("three kind\n");
 		return three_kind(hand1);
 	} else if (two_pair(hand0) && two_pair(hand1)) {
+		printf("two pair tie\n");
 		return break_tie(hand0, hand1, 7);
 	} else if (two_pair(hand0) || two_pair(hand1)) {
 		printf("two pair\n");
 		return two_pair(hand1);
 	} else if (pair(hand0) && pair(hand1)) {
+		printf("pair tie\n");
 		return break_tie(hand0, hand1, 8);
 	} else if (pair(hand0) || pair(hand1)) {
 		printf("pair\n");
 		return pair(hand1);
 	} else {
+		printf("high card tie\n");
 		return break_tie(hand0, hand1, 9);
 	}
 

@@ -24,3 +24,6 @@ test_two_pair: test_two_pair.c score.c
 
 test_pair: test_pair.c score.c
 		gcc -o test_pair test_pair.c score.c
+
+test_ties: test_ties.c score.c
+		gcc -o test_ties test_ties.c score.c
