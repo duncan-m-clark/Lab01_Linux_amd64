@@ -265,10 +265,23 @@ int break_tie(int* hand0, int* hand1, int tiedHand){
 		case 8:
 			break;
 		case 9:
-			break;
+			if ((hand0[4] & 0xf) == 0x1) {
+				hand0[4] = (hand0[4] & 0xf0) | 0xe;
+			}
+
+			if ((hand1[4] & 0xf) == 0x1) {
+				hand1[4] = (hand1[4] & 0xf0) | 0xe;
+			}
+
+			for (int i = 4; i >= 0; i--) {
+				if ((hand0[i] & 0xf) != (hand1[i] & 0xf)) {
+					return (hand0[i] & 0xf) > (hand1[i] & 0xf) ? 0 : 1;
+				}
+			}
+
+			return (hand0[4] & 0xf0) > (hand1[4] & 0xf0) ? 0 : 1;
 		default:
 			return 0;
-			break;
 	}
 }
 
