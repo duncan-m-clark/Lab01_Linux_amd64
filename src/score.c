@@ -47,23 +47,34 @@ int flush(int* hand) {
 }
 
 int straight(int* hand) {
-	return 0;
 	int currCard = hand[0] & 0xf;
 	for (int i = 1; i < 5; i++) {
-		if (hand[i] & 0xf != currCard + 1) {
+		if ((hand[i] & 0xf) != (currCard + 0x1)) {
 			break; 
 		} else if (i == 4) {
 			return 1;
 		}
+		currCard = hand[i] & 0xf;
 	}
 	
-	if (hand[4] & 0xf == 0x1) {
-		for (int i = 0; i < 4; i++) {
-			if (hand[i] & 0xf != i + 2) {
-				return 0;
+	if ((hand[4] & 0xf) == 0x1) {
+		if ((hand[3] & 0xf) == 0xd) {
+			for (int i = 0; i < 4; i++) {
+				if ((hand[i] & 0xf) != (i + 10)) {
+					return 0;
+				} else if (i == 3) {
+					return 1;
+				}
+			}
+		} else if ((hand[3] & 0xf) == 0x5) {
+			for (int i = 0; i < 4; i++) {
+				if ((hand[i] & 0xf) != (i + 2)) {
+					return 0;
+				} else if (i == 3) {
+					return 1;
+				}
 			}
 		}
-		return 1;
 	}
 	return 0;
 }
@@ -163,6 +174,34 @@ int compare_hands(int* hand0, int* hand1) {
 		compMin = (hand1[card] & 0xf);
 	}
 
+	if ((hand0[0] & 0x0f) == 0x01) {
+		while (1) {
+			for (int i = 1; i < 5; i++) {
+				int temp = hand0[i-1];
+				hand0[i-1] = hand0[i];
+				hand0[i] = temp;
+			}
+
+			if ((hand0[0] & 0x0f) != 0x01) {
+				break;
+			}
+		}
+	}
+
+	if ((hand1[0] & 0x0f) == 0x01) {
+		while (1) {
+			for (int i = 1; i < 5; i++) {
+				int temp = hand1[i-1];
+				hand1[i-1] = hand1[i];
+				hand1[i] = temp;
+			}
+
+			if ((hand1[0] & 0x0f) != 0x01) {
+				break;
+			}
+		}
+	}
+
 	for (int i = 0; i < 5; i++) {
 		printf("%x ", hand0[i] & 0xff);
 	}
@@ -193,6 +232,7 @@ int compare_hands(int* hand0, int* hand1) {
 		printf("flush\n");
 		return flush(hand1);
 	} else if (straight(hand0) && straight(hand1)) {
+		printf("why\n");
 		return break_tie(hand0, hand1, 5);
 	} else if (straight(hand0) || straight(hand1)) {
 		printf("straight\n");
