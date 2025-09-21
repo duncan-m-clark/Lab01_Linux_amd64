@@ -4,7 +4,7 @@
 int four_kind(int* hand) {
 	int hist[14] = {0};
 	for (int i = 0; i < 5; i++) {
-		hist[hand[i]&0xf]++;
+		hist[(hand[i]&0xf)]++;
 	}
 
 	for (int i = 1; i < 14; i++) {
@@ -40,7 +40,6 @@ int full_house(int* hand) {
 int flush(int* hand) {
 	int suit = hand[0] & 0xf0;
 	for (int i = 1; i < 5; i++) {
-		printf("%x and %x\n", suit, hand[i] & 0xf0);
 		if ((hand[i] & 0xf0) != suit) {
 			return 0;
 		}
@@ -79,7 +78,7 @@ int three_kind(int* hand) {
 	return 0;
 	int hist[14] = {0};
 	for (int i = 0; i < 5; i++) {
-		hist[hand[i]&0xf]++;
+		hist[(hand[i]&0xf)]++;
 	}
 
 	for (int i = 1; i < 14; i++) {

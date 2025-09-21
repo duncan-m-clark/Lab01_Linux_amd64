@@ -17,7 +17,7 @@ int main() {
     }
 
     for (int i = 5; i < 10; i ++) {
-        deck[i] = i % 4 << 4 | rand() % 13 + 1;
+        deck[i] = (i % 4 << 4) | (rand() % 13 + 1);
     }
 
     int* human = &deck[0];
@@ -26,11 +26,11 @@ int main() {
     printf("%d\n", compare_hands(human, comp));
 
     for (int i = 0; i < 5; i++) {
-        deck[i] = i % 4 << 4 | (12 - 2 * i);
+        deck[i] = (i % 4 << 4) | (12 - 2 * i);
     }
 
     for (int i = 5; i < 10; i ++) {
-        deck[i] = 2 << 4 | rand() % 13 + 1;
+        deck[i] = (2 << 4) | (rand() % 13 + 1);
     }
 
     human = &deck[0];

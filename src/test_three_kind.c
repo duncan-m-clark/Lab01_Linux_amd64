@@ -12,7 +12,7 @@ int main() {
     DECK deck;
     init_deck(deck);
 
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 3; i++) {
         deck[i] = ((i % 4) << 4) | 1;
     }
 
@@ -29,7 +29,7 @@ int main() {
         deck[i] = ((i % 4) << 4) | (12 - (2 * i));
     }
 
-    for (int i = 6; i < 10; i ++) {
+    for (int i = 6; i < 9; i ++) {
         deck[i] = ((i % 4) << 4) | 13;
     }
 
