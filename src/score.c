@@ -16,7 +16,6 @@ int four_kind(int* hand) {
 }
 
 int full_house(int* hand) {
-	return 0;
 	int hist[14] = {0};
 	for (int i = 0; i < 5; i++) {
 		hist[hand[i]&0xf]++;
