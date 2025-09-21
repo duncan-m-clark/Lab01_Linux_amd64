@@ -261,7 +261,69 @@ int break_tie(int* hand0, int* hand1, int tiedHand){
 
 			return (hand0[4] & 0xf0) > (hand1[4] & 0xf0) ? 0 : 1;
 		case 7:
-			break;
+			int humanFirstPair = -1;
+			int humanSecPair = -1;
+			int compFirstPair = -1;
+			int compSecPair = -1;
+
+			for (int i = 0; i < 14; i++) {
+				humanHist[i] = 0;
+				compHist[i] = 0;
+			}
+
+			for (int i = 0; i < 5; i++) {
+				humanHist[(hand0[i]&0xf)]++;
+			}
+
+			for (int i = 0; i < 5; i++) {
+				if ((humanHist[hand0[i]&0xf]) == 1) {
+					humanHigh = hand0[i];
+				}
+
+				if ((humanHist[hand0[i]&0xf]) == 2) {
+					if (humanFirstPair == -1) {
+						i++;
+						humanFirstPair = hand0[i];
+					} else {
+						i++;
+						humanSecPair = hand0[i];
+					}
+				}
+			}
+
+			for (int i = 0; i < 5; i++) {
+				if ((compHist[hand1[i]&0xf]) == 1) {
+					compHigh = hand1[i];
+				}
+
+				if ((compHist[hand1[i]&0xf]) == 2) {
+					if (compFirstPair == -1) {
+						i++;
+						compFirstPair = hand1[i];
+					} else {
+						i++;
+						compSecPair = hand1[i];
+					}
+				}
+			}
+
+			if ((humanFirstPair & 0xf) > (compFirstPair & 0xf)) {
+				return 0;
+			} else if ((humanFirstPair & 0xf) < (compFirstPair & 0xf)) {
+				return 1;
+			} else if ((humanSecPair & 0xf) > (compSecPair & 0xf)) {
+				return 0;
+			} else if ((humanSecPair & 0xf) < (compSecPair & 0xf)) {
+				return 1;
+			} else if ((humanHigh & 0xf) > (compHigh & 0xf)) {
+				return 0;
+			} else if ((humanHigh & 0xf) < (compHigh & 0xf)) {
+				return 1;
+			} else if ((humanFirstPair & 0xf0) > (compFirstPair & 0xf0)) {
+				return 0;
+			} else {
+				return 1;
+			}
 		case 8:
 			int humanPair = 0;
 			int compPair = 0;
