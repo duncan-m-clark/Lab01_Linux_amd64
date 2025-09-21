@@ -205,9 +205,45 @@ int break_tie(int* hand0, int* hand1, int tiedHand){
 			
 			return humanHigh > compHigh ? 0 : 1;
 		case 4:
-			break;
 		case 5:
-			break;
+			humanHigh = 0;
+			compHigh = 0;
+			for (int i = 0; i < 14; i++) {
+				humanHist[i] = 0;
+				compHist[i] = 0;
+			}
+
+			for (int i = 0; i < 5; i++) {
+				humanHist[(hand0[i]&0xf)]++;
+			}
+
+			for (int i = 1; i < 14; i++) {
+				if (humanHist[i] == 3) {
+					humanHigh = i;
+					break;
+				}
+			}
+
+			for (int i = 0; i < 5; i++) {
+				compHist[(hand1[i]&0xf)]++;
+			}
+
+			for (int i = 1; i < 14; i++) {
+				if (compHist[i] == 3) {
+					compHigh = i;
+					break;
+				}
+			}
+
+			if (humanHigh == 1) {
+				humanHigh = 14;
+			}
+
+			if (compHigh == 1) {
+				compHigh = 14;
+			}
+			
+			return humanHigh > compHigh ? 0 : 1;
 		case 6:
 			break;
 		case 7:
@@ -316,7 +352,7 @@ int compare_hands(int* hand0, int* hand1) {
 		return full_house(hand1);
 	} else if (flush(hand0) && flush(hand1)) {
 		printf("flush tie\n");
-		return break_tie(hand0, hand1, 5);
+		return break_tie(hand0, hand1, 6);
 	} else if (flush(hand0) || flush(hand1)) {
 		printf("flush\n");
 		return flush(hand1);
@@ -328,7 +364,7 @@ int compare_hands(int* hand0, int* hand1) {
 		return straight(hand1);
 	} else if (three_kind(hand0) && three_kind(hand1)) {
 		printf("three kind tie\n");
-		return break_tie(hand0, hand1, 6);
+		return break_tie(hand0, hand1, 5);
 	} else if (three_kind(hand0) || three_kind(hand1)) {
 		printf("three kind\n");
 		return three_kind(hand1);

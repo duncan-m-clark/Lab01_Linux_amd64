@@ -105,4 +105,42 @@ int main() {
     comp = &deck[5];
 
     printf("%d\n", compare_hands(human, comp));
+
+    init_deck(deck);
+
+    deck[0] = (0x20) | 0x1;
+    deck[1] = (0x10) | 0x1;
+    deck[2] = (0x30) | 0x1;
+    deck[3] = (0x00) | 0xd;
+    deck[4] = (0x20) | 0xd;
+
+    deck[5] = (0x30) | 0xc;
+    deck[6] = (0x20) | 0xc;
+    deck[7] = (0x10) | 0xc;
+    deck[8] = (0x00) | 0xb;
+    deck[9] = (0x30) | 0xb;
+
+    human = &deck[0];
+    comp = &deck[5];
+
+    printf("%d\n", compare_hands(human, comp));
+
+    init_deck(deck);
+
+    deck[0] = (0x20) | 0x1;
+    deck[1] = (0x10) | 0xc;
+    deck[2] = (0x30) | 0xd;
+    deck[3] = (0x00) | 0xd;
+    deck[4] = (0x20) | 0xd;
+
+    deck[5] = (0x30) | 0x1;
+    deck[6] = (0x20) | 0x2;
+    deck[7] = (0x10) | 0x1;
+    deck[8] = (0x00) | 0x1;
+    deck[9] = (0x30) | 0x5;
+
+    human = &deck[0];
+    comp = &deck[5];
+
+    printf("%d\n", compare_hands(human, comp));
 }
