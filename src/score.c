@@ -89,7 +89,6 @@ int three_kind(int* hand) {
 }
 
 int two_pair(int* hand) {
-	return 0;
 	int hist[14] = {0};
 	for (int i = 0; i < 5; i++) {
 		hist[hand[i]&0xf]++;
@@ -97,6 +96,7 @@ int two_pair(int* hand) {
 
 	int firstPair = 0;
 	int secondPair = 0;
+
 	for (int i = 1; i < 14; i++) {
 		if (hist[i] == 2) {
 			if (firstPair == 0) {
@@ -176,34 +176,42 @@ int compare_hands(int* hand0, int* hand1) {
 	if (straight_flush(hand0) && straight_flush(hand1)) {
 		return break_tie(hand0, hand1, 1);
 	} else if (straight_flush(hand0) || straight_flush(hand1)) {
+		printf("straight flush\n");
 		return straight_flush(hand1);
 	} else if (four_kind(hand0) && four_kind(hand1)) {
 		return break_tie(hand0, hand1, 2);
 	} else if (four_kind(hand0) || four_kind(hand1)) {
+		printf("four kind\n");
 		return four_kind(hand1);
 	} else if (full_house(hand0) && full_house(hand1)) {
 		return break_tie(hand0, hand1, 3);
 	} else if (full_house(hand0) || full_house(hand1)) {
+		printf("full house\n");
 		return full_house(hand1);
 	} else if (flush(hand0) && flush(hand1)) {
 		return break_tie(hand0, hand1, 4);
 	} else if (flush(hand0) || flush(hand1)) {
+		printf("flush\n");
 		return flush(hand1);
 	} else if (straight(hand0) && straight(hand1)) {
 		return break_tie(hand0, hand1, 5);
 	} else if (straight(hand0) || straight(hand1)) {
+		printf("straight\n");
 		return straight(hand1);
 	} else if (three_kind(hand0) && three_kind(hand1)) {
 		return break_tie(hand0, hand1, 6);
 	} else if (three_kind(hand0) || three_kind(hand1)) {
+		printf("three kind\n");
 		return three_kind(hand1);
 	} else if (two_pair(hand0) && two_pair(hand1)) {
 		return break_tie(hand0, hand1, 7);
 	} else if (two_pair(hand0) || two_pair(hand1)) {
+		printf("two pair\n");
 		return two_pair(hand1);
 	} else if (pair(hand0) && pair(hand1)) {
 		return break_tie(hand0, hand1, 8);
 	} else if (pair(hand0) || pair(hand1)) {
+		printf("pair\n");
 		return pair(hand1);
 	} else {
 		return break_tie(hand0, hand1, 9);
