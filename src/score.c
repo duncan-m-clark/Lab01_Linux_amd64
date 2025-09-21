@@ -263,7 +263,44 @@ int break_tie(int* hand0, int* hand1, int tiedHand){
 		case 7:
 			break;
 		case 8:
-			break;
+			humanHigh = 0;
+			compHigh = 0;
+			for (int i = 0; i < 14; i++) {
+				humanHist[i] = 0;
+				compHist[i] = 0;
+			}
+
+			for (int i = 0; i < 5; i++) {
+				humanHist[(hand0[i]&0xf)]++;
+			}
+
+			for (int i = 1; i < 14; i++) {
+				if (humanHist[i] == 2) {
+					humanHigh = i;
+					break;
+				}
+			}
+
+			for (int i = 0; i < 5; i++) {
+				compHist[(hand1[i]&0xf)]++;
+			}
+
+			for (int i = 1; i < 14; i++) {
+				if (compHist[i] == 2) {
+					compHigh = i;
+					break;
+				}
+			}
+
+			if (humanHigh == 1) {
+				humanHigh = 14;
+			}
+
+			if (compHigh == 1) {
+				compHigh = 14;
+			}
+			
+			return humanHigh > compHigh ? 0 : 1;
 		case 9:
 			if ((hand0[4] & 0xf) == 0x1) {
 				hand0[4] = (hand0[4] & 0xf0) | 0xe;
@@ -286,21 +323,31 @@ int break_tie(int* hand0, int* hand1, int tiedHand){
 }
 
 int compare_hands(int* hand0, int* hand1) {
-	int humanMin = (hand0[0] & 0xf);
-	int compMin = (hand1[0] & 0xf);
+	int humanMin = hand0[0];
+	int compMin = hand1[0];
 	int humanMinIndex = 0;
 	int compMinIndex = 0;
 
 	for (int card = 1; card < 5; card++) {
 		for (int check = card; check < 5; check++) {
-			if ((hand0[check] & 0xf) < humanMin) {
-				humanMin = hand0[check] & 0xf;
+			if ((hand0[check] & 0xf) < (humanMin & 0xf)) {
+				humanMin = hand0[check];
 				humanMinIndex = check;
+			} else if ((hand0[check] & 0xf) == (humanMin & 0xf)) {
+				if ((hand0[check] & 0xf0) < (humanMin & 0xf0)){
+				humanMin = hand0[check];
+				humanMinIndex = check;
+				}
 			}
 
-			if ((hand1[check] & 0xf) < compMin) {
-				compMin = hand1[check] & 0xf;
+			if ((hand1[check] & 0xf) < (compMin & 0xf)) {
+				compMin = hand1[check];
 				compMinIndex = check;
+			} else if ((hand1[check] & 0xf) == (compMin & 0xf)) {
+				if ((hand1[check] & 0xf0) < (compMin & 0xf0)) {
+				compMin = hand1[check];
+				compMinIndex = check;
+				}
 			}
 		}
 
@@ -318,8 +365,8 @@ int compare_hands(int* hand0, int* hand1) {
 
 		humanMinIndex = card;
 		compMinIndex = card;
-		humanMin = (hand0[card] & 0xf);
-		compMin = (hand1[card] & 0xf);
+		humanMin = hand0[card];
+		compMin = hand1[card];
 	}
 
 	if ((hand0[0] & 0x0f) == 0x01) {
