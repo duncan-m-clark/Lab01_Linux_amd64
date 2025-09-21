@@ -1,6 +1,13 @@
 poker
 test_shuffle
 test_flush
+test_four_kind
+test_three_kind
+test_full_house
+test_two_pair
+test_pair
+test_straight
+test_ties
 
 linux.amd64
 linux.x86
