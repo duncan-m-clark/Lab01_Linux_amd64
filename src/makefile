@@ -12,3 +12,6 @@ test_four_kind: test_four_kind.c score.c
 
 test_three_kind: test_three_kind.c score.c
 		gcc -o test_three_kind test_three_kind.c score.c
+
+test_pair: test_pair.c score.c
+		gcc -o test_pair test_pair.c score.c		

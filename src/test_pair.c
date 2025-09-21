@@ -12,8 +12,8 @@ int main() {
     DECK deck;
     init_deck(deck);
 
-    for (int i = 0; i < 5; i++) {
-        deck[i] = (3 << 4) | (12 - (2 * i));
+    for (int i = 0; i < 2; i++) {
+        deck[i] = ((i % 4) << 4) | 1;
     }
 
     for (int i = 5; i < 10; i ++) {
@@ -29,8 +29,8 @@ int main() {
         deck[i] = ((i % 4) << 4) | (12 - (2 * i));
     }
 
-    for (int i = 5; i < 10; i ++) {
-        deck[i] = (2 << 4) | ((rand() % 13) + 1);
+    for (int i = 6; i < 8; i ++) {
+        deck[i] = ((i % 4) << 4) | 13;
     }
 
     human = &deck[0];
